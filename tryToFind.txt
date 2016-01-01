@@ -1,0 +1,28 @@
+int PosX_0[512];int PosY_0[512];
+int mapTarTake[8][8];loadimage (#mapTarTake[0][0], "C:\allods_bots\ActiveWindFarmLut\mapTarTake.bmp");
+win w = window ("Аллоды Онлайн", "NIVAL_MMO_ENGINE", -1);
+
+activate(w);
+
+sleep(rand(100,150));
+key('m');
+sleep(rand(700,1000));
+if(findimage(-1, #mapTarTake[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)
+{
+sleep(rand(700,1000));
+mousedbl(LEFT, PosX_0[0], PosY_0[0], 1, w);
+sleep(rand(700,1000));
+
+int x[1], y[1];
+int color[2], kol[2];
+color[0]=5258154; color[1]=6121436;
+kol[0]=3; kol[1]=3;
+int r = 25;
+sleep(1500);
+
+onaway: if(findheapcolor(1, #color[0], #kol[0], 2, 1, #x[0], #y[0], 5, 5, 0, 0, 150, 126, 577, 379, r, r, r, r, r, r, w)>0)
+ {
+  goto onaway;
+  sleep(1500);
+ }
+}

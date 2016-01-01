@@ -1,0 +1,257 @@
+int PosX_0[512];int PosY_0[512];
+int Enemy_ident[11][17];loadimage(#Enemy_ident[0][0], "C:\allods_bots\ActiveWindFarmLut\idnEn.bmp");
+int tooFar[21][1];loadimage (#tooFar[0][0], "C:\allods_bots\ActiveWindFarmLut\tooFar.bmp");
+int mana[67][1];loadimage (#mana[0][0], "C:\allods_bots\ActiveWindFarmLut\mana.bmp");
+int health[67][1];loadimage (#health[0][0], "C:\allods_bots\ActiveWindFarmLut\health.bmp");
+int doNotSee[34][1];loadimage (#doNotSee[0][0], "C:\allods_bots\ActiveWindFarmLut\doNotSee.bmp");
+int fullMana[4][8];loadimage (#fullMana[0][0], "C:\allods_bots\ActiveWindFarmLut\fullMana.bmp");
+int fullHealth[7][7];loadimage (#fullHealth[0][0], "C:\allods_bots\ActiveWindFarmLut\fullHealth.bmp");
+int enXP100[19][7];loadimage (#enXP100[0][0], "C:\allods_bots\ActiveWindFarmLut\enXP100.bmp");
+int hil[2][6];loadimage (#hil[0][0], "C:\allods_bots\ActiveWindFarmLut\hil.bmp");
+int aspectSveta[18][18];loadimage (#aspectSveta[0][0], "C:\allods_bots\ActiveWindFarmLut\aspectSveta.bmp");
+int okDead[59][11];loadimage (#okDead[0][0], "C:\allods_bots\ActiveWindFarmLut\okDead.bmp");
+int resurrect[92][10];loadimage (#resurrect[0][0], "C:\allods_bots\ActiveWindFarmLut\resurrect.bmp");
+int emptySlot[18][17];loadimage (#emptySlot[0][0], "C:\allods_bots\ActiveWindFarmLut\emptySlot.bmp");
+int miraTorg[9][9];loadimage (#miraTorg[0][0], "C:\allods_bots\ActiveWindFarmLut\miraTorg.bmp");
+int z_lut[13][13];loadimage (#z_lut[0][0], "C:\allods_bots\ActiveWindFarmLut\z_lut.bmp");
+int mapTarTake[6][6];loadimage (#mapTarTake[0][0], "C:\allods_bots\ActiveWindFarmLut\mapTarTake.bmp");
+int klubok[18][18];loadimage (#klubok[0][0], "C:\allods_bots\ActiveWindFarmLut\klubok.bmp");
+int chistMap[47][49];loadimage (#chistMap[0][0], "C:\allods_bots\ActiveWindFarmLut\chistMap.bmp");
+win w = window ("Аллоды Онлайн", "NIVAL_MMO_ENGINE", -1);
+
+int sellFlag = 0;
+int isstuplFlag = 0;
+int shieldFlag = 0;
+int noEnemy = 0;
+int tarX = 167;
+int tarY = 234;
+
+e:;
+ifDead();
+if(isEnemy()==1)
+{
+  {
+    killEnemy();
+  }
+  goto e;
+}
+else 
+{
+  if(isSick()==1)
+  {
+    getLut();
+    if(isEnemy()<1)sleep(2500);
+    if(isEnemy()<1)sleep(2500);
+    goto e;
+  }
+  searchEnemy();
+  goto e;
+}
+
+function killEnemy()
+{
+  if(sellFlag == 0)
+  {
+    if(findimage(-1, #hil[0][0], 0, #PosX_0[0], #PosY_0[0], 105, 19, 189, 40, w)<1)
+    {
+      if(isstuplFlag == 0)
+      {
+        if(shieldFlag == 0)
+        {
+          key('9', 1, 0, w);
+          key('9', 1, 0, w);
+          sleep(rand(300, 350));
+            shieldFlag = 1;
+        }
+        key('5', 1, 0, w);
+        key('5', 1, 0, w);
+        sleep(2550);
+        key('8', 1, 0, w);
+      }
+    }
+//    if(findimage(-1, #hil[0][0], 0, #PosX_0[0], #PosY_0[0], 90, 18, 191, 43, w)<1)
+//    {
+//      key('8', 1, 0, w);
+//      isstuplFlag = 1;
+//    }
+    shieldFlag = 0;
+  }
+  if(findimage(-1, #enXP100[0][0], 0, #PosX_0[0], #PosY_0[0], 198, 21, 235, 39, w)>0)
+  {
+    if(findimage(-1, #aspectSveta[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)<1)
+    {
+      key('7', 1, 0, w);
+      sleep(rand(1050,1100));
+    }
+    //key('6', 1, 0, w);
+    //sleep(rand(1050,1100));
+    key('2', 1, 0, w);
+  }
+  if(sellFlag == 0)key('1', 1, 0, w);
+  sleep(rand(300, 400));
+  if(isFar()==1)
+  {
+    noEnemy++;
+      if(noEnemy > 20)
+      {
+        key(ESCAPE, 1, 0, w);sleep(rand(100,150));
+        goToEnemy();
+      }
+    keydown('q');
+    sleep(rand(300,350));
+    keyup('q');
+    key(TAB, 1, 0, w);
+  }
+}
+
+function getLut()
+{
+  noEnemy = 0;
+  keydown('w');sleep(400);keyup('w');
+  if(isEnemy()==1)return;
+  sleep(900);if(findimage(-1, #z_lut[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)key('z');//w
+  keydown('s');sleep(700);keyup('s');
+  if(isEnemy()==1)return;
+  keydown('s');sleep(800);keyup('s');
+  sleep(900);if(findimage(-1, #z_lut[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)key('z');//s
+  keydown('w');sleep(400);keyup('w');
+  if(isEnemy()==1)return;
+  keydown('a');sleep(400);keyup('a');
+  sleep(900);if(findimage(-1, #z_lut[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)key('z');//a
+  keydown('d');sleep(400);keyup('d');
+  if(isEnemy()==1)return;
+  keydown('d');sleep(400);keyup('d');
+  sleep(900);if(findimage(-1, #z_lut[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)key('z');//d
+  keydown('a');sleep(400);keyup('a');
+  if(isEnemy()==1)return;
+  key('b');
+  sleep(200);
+  if(findimage(-1, #emptySlot[0][0], 0, #PosX_0[0], #PosY_0[0], 685, 359, 726, 405, w)<1)sellFlag = 1;
+  sleep(200);
+  key('b');
+}
+
+function ifDead()
+{
+int x;int y;
+if(findimage(-1, #okDead[0][0], 0, #PosX_0[0], #PosY_0[0], 329, 236, 784, 562, w)>0)
+  {
+    sleep(rand(300,400));
+    mousemove(391, 273, w);
+    mouse(LEFT);
+    res:;
+
+    if(findimage(-1, #chistMap[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)
+    {
+      mouse(LEFT, 775, 8);sleep(rand(100,150));
+    }
+    if(findimage(-1, #resurrect[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)
+    {
+      mousemove(573, 141, w);
+    }
+    else
+    {
+      goto res;
+    }
+    mouse(LEFT);
+    sleep(20000);
+
+    sell:
+    if(findimage(-1, #miraTorg[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)
+    {
+      sleep(2000);
+      mousedbl(LEFT, PosX_0[0], PosY_0[0], 1, w);
+      sleep(6000);
+      mousedbl(LEFT, 573, 354, 1, w);sleep(rand(100,150));//1 ряд
+      mousedbl(LEFT, 602, 354, 1, w);sleep(rand(100,150));
+      mousedbl(LEFT, 631, 354, 1, w);sleep(rand(100,150));
+      mousedbl(LEFT, 652, 354, 1, w);sleep(rand(100,150));
+      mousedbl(LEFT, 678, 354, 1, w);sleep(rand(100,150));
+      mousedbl(LEFT, 704, 354, 1, w);sleep(rand(100,150));
+      mousedbl(LEFT, 574, 381, 1, w);sleep(rand(100,150));//2 ряд
+      mousedbl(LEFT, 600, 380, 1, w);sleep(rand(100,150));
+      mousedbl(LEFT, 626, 381, 1, w);sleep(rand(100,150));
+      mousedbl(LEFT, 656, 381, 1, w);sleep(rand(100,150));
+      mousedbl(LEFT, 678, 381, 1, w);sleep(rand(100,150));
+      mousedbl(LEFT, 704, 381, 1, w);sleep(rand(100,150));
+      key(ESCAPE, 1, 0, w);sleep(rand(100,150));
+      key(ESCAPE, 1, 0, w);sleep(rand(100,150));
+    }
+    else
+    {
+      searchEnemy();
+      goto sell;
+    }
+    goToEnemy();
+    sellFlag = 0;
+  }
+}
+
+function searchEnemy()
+{
+    noEnemy++;
+      if(noEnemy > 20)
+      {
+        goToEnemy();
+      }
+  keydown('q');
+  sleep(rand(400,500));
+  keyup('q');
+  key(TAB, 1, 0, w);
+  isstuplFlag = 0;
+}
+
+function goToEnemy()
+{
+ noEnemy = 0;
+ sleep(rand(100,150));
+ key('m');
+ sleep(rand(300,400));
+// if(findimage(-1, #mapTarTake[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)
+//  {
+   sleep(rand(300,400)); 
+   mousedbl(LEFT, tarX, tarY/*PosX_0[0], PosY_0[0]*/, 1, w);
+   sleep(rand(700,1000));
+   int x[1], y[1];
+   int color[2], kol[2];
+   color[0]=5258154; color[1]=6121436;
+   kol[0]=3; kol[1]=3;
+   int r = 100;
+   sleep(4000);
+   onaway: 
+   if(isEnemy()==1)
+   {
+   key('w', 1, 0, w);
+   return 0;
+   }
+   if(findimage(-1, #klubok[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)
+   {
+    sleep(1500);
+    goto onaway;
+   }
+//  } 
+}
+
+function isEnemy()
+{
+  if(findimage(-1, #Enemy_ident[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)return 1;
+  return 0;
+}
+
+function isFar()
+{
+  if(findimage(-1, #tooFar[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 700, 156, w)>0)return 1;
+  if(findimage(-1, #doNotSee[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 700, 156, w)>0)return 1;
+  return 0;
+}
+
+function isSick()
+{
+  if(findimage(-1, #health[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 194, 44, w) < 1)
+  { 
+    key('5', 1, 0, w);
+    sleep(2550);
+    return 1;
+  }
+  if(findimage(-1, #mana[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 191, 55, w) < 1)return 1;
+}

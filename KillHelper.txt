@@ -1,0 +1,36 @@
+int PosX_0[512];int PosY_0[512];
+int enXP100[19][7];loadimage (#enXP100[0][0], "C:\allods_bots\ActiveWindFarmLut\enXP100.bmp");
+int aspectSveta[18][18];loadimage (#aspectSveta[0][0], "C:\allods_bots\ActiveWindFarmLut\aspectSveta.bmp");
+int Enemy_ident[11][17];loadimage(#Enemy_ident[0][0], "C:\allods_bots\ActiveWindFarmLut\idnEn.bmp");
+win w = window ("Аллоды Онлайн", "NIVAL_MMO_ENGINE", -1);
+
+e:;
+if(isEnemy()==1)
+{
+  {
+    killEnemy();
+  }
+  goto e;
+}
+goto e;
+
+function killEnemy()
+{
+  if(findimage(-1, #enXP100[0][0], 0, #PosX_0[0], #PosY_0[0], 198, 21, 235, 39, w)>0)
+  {
+    if(findimage(-1, #aspectSveta[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)<1)
+    {
+      key('7', 1, 0, w);
+      sleep(rand(1050,1100));
+    }
+    key('2', 1, 0, w);
+  }
+  key('1', 1, 0, w);
+  sleep(rand(200, 250))
+}
+
+function isEnemy()
+{
+  if(findimage(-1, #Enemy_ident[0][0], 0, #PosX_0[0], #PosY_0[0], 0, 0, 784, 562, w)>0)return 1;
+  return 0;
+}
